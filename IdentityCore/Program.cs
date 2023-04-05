@@ -24,6 +24,16 @@ builder.Services.AddIdentity<User, IdentityRole>()
 
 builder.Services.AddScoped<IOathRepo, OathRepo>();
 
+
+//configiring Password 
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequiredLength = 4;
+    options.Password.RequireNonAlphanumeric = false;
+
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
