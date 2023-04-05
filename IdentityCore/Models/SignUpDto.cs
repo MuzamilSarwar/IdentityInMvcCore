@@ -4,6 +4,19 @@ namespace IdentityCore.Models
 {
     public class SignUpDto
     {
+        [Required(ErrorMessage ="Kinldy Enter Your FirstName")]
+        [MaxLength(50)]
+        [Display(Name ="First Name")]
+        public string FirstName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Kinldy Enter Your LastName")]
+        [MaxLength(50)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; } = string.Empty;
+
+        [Display(Name = "Profile Image")]
+        public string ProfileImage { get; set; } = string.Empty;
+
         [Required(ErrorMessage ="Email Field is Required")]
         [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress)]
