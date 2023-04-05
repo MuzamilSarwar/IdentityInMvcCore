@@ -1,4 +1,5 @@
 using IdentityCore.Data;
+using IdentityCore.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,13 +8,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Add database
 builder.Services.AddDbContext<ProjectContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("connection"));
 });
 
+// Add Identity
+
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ProjectContext>();
+
+//Interface registerations
+
+builder.Services.AddScoped<IOathRepo, OathRepo>();
 
 var app = builder.Build();
 
