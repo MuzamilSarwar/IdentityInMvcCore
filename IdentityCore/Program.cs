@@ -1,4 +1,5 @@
 using IdentityCore.Data;
+using IdentityCore.Models;
 using IdentityCore.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,22 @@ builder.Services.AddDbContext<ProjectContext>(options =>
 
 // Add Identity
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ProjectContext>();
 
 //Interface registerations
 
 builder.Services.AddScoped<IOathRepo, OathRepo>();
+
+
+//configiring Password 
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequiredLength = 4;
+    options.Password.RequireNonAlphanumeric = false;
+
+});
 
 var app = builder.Build();
 
