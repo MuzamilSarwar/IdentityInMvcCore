@@ -1,5 +1,6 @@
 ﻿using IdentityCore.Models;
 using IdentityCore.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityCore.Controllers
@@ -42,6 +43,38 @@ namespace IdentityCore.Controllers
                 return View();
             }
             
+        }
+
+        [Route("login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [Route("login")]
+        [HttpPost]
+        public async Task<IActionResult> Login(SignInDto obj)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await oathRepo.LoginAsync(obj);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index","Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Crdentials");
+                    
+                }
+
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> logout()
+        {
+            await oathRepo.logout();
+            return RedirectToAction("index", "Home");
         }
     }
 }
