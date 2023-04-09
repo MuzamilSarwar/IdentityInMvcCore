@@ -52,13 +52,17 @@ namespace IdentityCore.Controllers
         }
         [Route("login")]
         [HttpPost]
-        public async Task<IActionResult> Login(SignInDto obj)
+        public async Task<IActionResult> Login(SignInDto obj, string ReturnUrl="")
         {
             if (ModelState.IsValid)
             {
                 var result = await oathRepo.LoginAsync(obj);
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(ReturnUrl))
+                    {
+                       return LocalRedirect(ReturnUrl);
+                    }
                     return RedirectToAction("Index","Home");
                 }
                 else

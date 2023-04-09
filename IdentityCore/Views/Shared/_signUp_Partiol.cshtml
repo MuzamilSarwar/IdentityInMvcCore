@@ -20,6 +20,8 @@ else
         <a class="nav-link text-dark" asp-area="" asp-controller="Oath" asp-action="signUp">Signup</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Oath" asp-action="login">login</a>
+       @* asp-rout-returnUrl used for the purpose if you are on specific page and do login then after login you will 
+        be redirecte the same page where you where*@
+        <a class="nav-link text-dark" asp-area="" asp-controller="Oath" asp-action="login" asp-route-returnUrl="@Context.Request.Path">login</a>
     </li>
 }
