@@ -34,6 +34,11 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 });
 
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.LoginPath = builder.Configuration["application:path"];
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
