@@ -2,12 +2,14 @@
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
 
-@if( User.Identity.Name != null)
+@if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
 
-        <a class="nav-link text-dark" asp-area="" asp-controller="Oath" asp-action="signUp">@User.Identity.Name</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Oath" asp-action="signUp">@User.FindFirst("UserFirstName").Value</a>
     </li>
     <li class="nav-item">
 

@@ -18,6 +18,9 @@ namespace IdentityCore.Repository
         {
             var user = new User()
             {
+                FirstName= obj.FirstName,
+                LastName= obj.LastName,
+                ProfileImage = obj.ProfileImage,
                 Email = obj.Email,
                 UserName = obj.Email
             };

@@ -1,4 +1,5 @@
 using IdentityCore.Data;
+using IdentityCore.Helper;
 using IdentityCore.Models;
 using IdentityCore.Repository;
 using Microsoft.AspNetCore.Identity;
@@ -33,6 +34,10 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
 
 });
+
+// user claim factory extendid version
+
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ClaimsFactory >();
 
 var app = builder.Build();
 
