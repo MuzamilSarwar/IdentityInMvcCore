@@ -35,6 +35,11 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 });
 
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.LoginPath = builder.Configuration["application:path"];
+});
+
 // user claim factory extendid version
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ClaimsFactory >();
