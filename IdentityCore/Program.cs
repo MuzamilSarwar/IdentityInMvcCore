@@ -1,4 +1,5 @@
 using IdentityCore.Data;
+using IdentityCore.Helper;
 using IdentityCore.Models;
 using IdentityCore.Repository;
 using Microsoft.AspNetCore.Identity;
@@ -38,6 +39,10 @@ builder.Services.ConfigureApplicationCookie(config =>
 {
     config.LoginPath = builder.Configuration["application:path"];
 });
+
+// user claim factory extendid version
+
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ClaimsFactory >();
 
 var app = builder.Build();
 
