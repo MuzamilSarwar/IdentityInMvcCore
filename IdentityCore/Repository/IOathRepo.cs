@@ -8,5 +8,6 @@ namespace IdentityCore.Repository
         Task<IdentityResult> CreateUserAsync(SignUpDto obj);
         Task<SignInResult> LoginAsync(SignInDto obj);
         Task logout();
+        Task<IdentityResult> ChnagePasswordAsync(ChangePasswordDto obj);
     }
 }

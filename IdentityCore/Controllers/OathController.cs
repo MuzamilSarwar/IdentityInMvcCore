@@ -80,5 +80,30 @@ namespace IdentityCore.Controllers
             await oathRepo.logout();
             return RedirectToAction("index", "Home");
         }
+        public IActionResult changePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> changePassword(ChangePasswordDto obj)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await oathRepo.ChnagePasswordAsync(obj);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    foreach (var item in result.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
+            }
+
+            return View(obj);
+        }
     }
 }
