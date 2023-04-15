@@ -43,6 +43,7 @@ builder.Services.ConfigureApplicationCookie(config =>
 // user claim factory extendid version
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ClaimsFactory >();
+builder.Services.AddScoped<IGenralPurpose, GenralPurpose >();
 
 var app = builder.Build();
 
