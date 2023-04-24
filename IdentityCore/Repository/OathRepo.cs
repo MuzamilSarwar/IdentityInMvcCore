@@ -1,4 +1,5 @@
-﻿using IdentityCore.Models;
+﻿using IdentityCore.Helper;
+using IdentityCore.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace IdentityCore.Repository
@@ -7,11 +8,14 @@ namespace IdentityCore.Repository
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly IGenralPurpose genralPurpose;
 
-        public OathRepo(UserManager<User> userManager, SignInManager<User> signInManager)
+        public OathRepo(UserManager<User> userManager, SignInManager<User> signInManager,
+            IGenralPurpose genralPurpose)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.genralPurpose = genralPurpose;
         }
 
         public async Task<IdentityResult> CreateUserAsync(SignUpDto obj)
@@ -37,6 +41,18 @@ namespace IdentityCore.Repository
         public async Task logout()
         {
             await signInManager.SignOutAsync();
+        }
+
+        public async Task<IdentityResult> ChnagePasswordAsync(ChangePasswordDto obj)
+        {
+            var userId = genralPurpose.GetLogedInUserId();
+            
+            
+            var userget = await userManager.FindByIdAsync(userId);
+            var result = await userManager.ChangePasswordAsync(userget, obj.OldPassword, obj.NewPassword);
+            return result;
+            
+            
         }
     }
 }

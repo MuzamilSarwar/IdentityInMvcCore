@@ -43,7 +43,13 @@ builder.Services.ConfigureApplicationCookie(config =>
 // user claim factory extendid version
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ClaimsFactory >();
+builder.Services.AddScoped<IGenralPurpose, GenralPurpose >();
+builder.Services.AddScoped<IEmailService, EmailService >();
 
+
+//for Reading congiration from class
+
+builder.Services.Configure<SmtpConfigModel>(builder.Configuration.GetSection("EmailSettings"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
