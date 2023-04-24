@@ -12,16 +12,23 @@ namespace IdentityCore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IGenralPurpose genral;
+        private readonly IEmailService email;
 
-        public HomeController(ILogger<HomeController> logger, IGenralPurpose genral)
+        public HomeController(ILogger<HomeController> logger, IGenralPurpose genral,IEmailService email)
         {
             _logger = logger;
             this.genral = genral;
+            this.email = email;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var result = genral.IsAuthenticated();
+            UserEmailOptions options = new UserEmailOptions
+            {
+                ToEmails = new List<string>() { "test@gmail.com" }
+            };
+            await email.SendTestEmail(options);
             
         
             return View();
