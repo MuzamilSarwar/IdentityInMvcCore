@@ -1,4 +1,5 @@
 using IdentityCore.Data;
+using IdentityCore.EmailServices;
 using IdentityCore.Helper;
 using IdentityCore.Models;
 using IdentityCore.Repository;
@@ -44,12 +45,22 @@ builder.Services.ConfigureApplicationCookie(config =>
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<User>, ClaimsFactory >();
 builder.Services.AddScoped<IGenralPurpose, GenralPurpose >();
-builder.Services.AddScoped<IEmailService, EmailService >();
+//builder.Services.AddScoped<IEmailService, EmailService >();
+builder.Services.AddScoped<IEmailSender, EmailSender >();
 
 
 //for Reading congiration from class
 
-builder.Services.Configure<SmtpConfigModel>(builder.Configuration.GetSection("EmailSettings"));
+//builder.Services.Configure<SmtpConfigModel>(builder.Configuration.GetSection("EmailSettings"));
+
+//for reading configration from class
+
+var emailConfig = builder.Configuration
+                  .GetSection("EmailConfigration")
+                  .Get<EmailConfigration>();
+
+builder.Services.AddSingleton(emailConfig);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

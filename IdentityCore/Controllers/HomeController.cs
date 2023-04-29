@@ -1,4 +1,5 @@
-﻿using IdentityCore.Helper;
+﻿using IdentityCore.EmailServices;
+using IdentityCore.Helper;
 using IdentityCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,24 +13,27 @@ namespace IdentityCore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IGenralPurpose genral;
-        private readonly IEmailService email;
+        private readonly IEmailSender snder;
 
-        public HomeController(ILogger<HomeController> logger, IGenralPurpose genral,IEmailService email)
+        public HomeController(ILogger<HomeController> logger, IGenralPurpose genral
+                              , IEmailSender snder)
         {
             _logger = logger;
             this.genral = genral;
-            this.email = email;
+            this.snder = snder;
         }
 
         public async Task<IActionResult> Index()
         {
-            var result = genral.IsAuthenticated();
-            UserEmailOptions options = new UserEmailOptions
-            {
-                ToEmails = new List<string>() { "test@gmail.com" }
-            };
-            await email.SendTestEmail(options);
+            //var result = genral.IsAuthenticated();
+            //UserEmailOptions options = new UserEmailOptions
+            //{
+            //    ToEmails = new List<string>() { "test@gmail.com" }
+            //};
+            //await email.SendTestEmail(options);
             
+            var message = new Message(new string[]{"muzamilsarwar415@gmail.com"},"test","testing out tis");
+            snder.SendEmail(message);
         
             return View();
         }
